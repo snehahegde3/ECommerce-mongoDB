@@ -20,10 +20,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findById('6367c52eb1cb3ed198cde754')
+  User.findById('636a81a97e6e51908f1242e7')
     .then((user) => {
       console.log(user);
-      req.user = user;
+      // to make surewe can work with the user data
+      //where user is a mongodb object,
+
+      // req.user = user;
+
+      req.user = new User(user.name, user.email, user.cart, user._id);
       next();
     })
     .catch((err) => {
